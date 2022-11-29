@@ -169,8 +169,7 @@ def read_package(workout_type: str, data: list) -> Training:
     slovar = {
         'SWM': Swimming,
         'RUN': Running,
-        'WLK': SportsWalking,
-        }
+        'WLK': SportsWalking}
     for i in slovar.keys():
         if workout_type == i:
             target_class = slovar[i]
