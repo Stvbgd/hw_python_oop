@@ -150,7 +150,7 @@ class Swimming(Training):
 
     def get_mean_speed(self):
         mean_speed = (self.length_pool * self.count_pool
-                 / self.M_IN_KM / self.duration)
+                      / self.M_IN_KM / self.duration)
         return mean_speed
 
     def get_spent_calories(self):
