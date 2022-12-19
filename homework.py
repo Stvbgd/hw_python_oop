@@ -24,7 +24,6 @@ class Training:
     LEN_STEP: float = 0.65
     M_IN_KM: int = 1000
     MIN_IN_H: int = 60
-    distance: float
 
     def __init__(self,
                  action: int,
@@ -35,6 +34,7 @@ class Training:
         self.action = action
         self.duration = duration
         self.weight = weight
+        self.distance = self.get_distance()
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -64,7 +64,17 @@ class Running(Training):
     """Тренировка: бег"""
     CALORIES_MEAN_SPEED_MULTIPLIER: int = 18
     CALORIES_MEAN_SPEED_SHIFT: float = 1.79
-    mean_speed: float
+
+    def __init__(self,
+                 action: int,
+                 duration: float,
+                 weight: float,
+                 ):
+        self.action = action
+        self.duration = duration
+        self.weight = weight
+        self.distance = self.get_distance()
+        self.mean_speed = self.get_mean_speed()
 
     def get_spent_calories(self) -> float:
         calories = ((self.CALORIES_MEAN_SPEED_MULTIPLIER
@@ -82,7 +92,6 @@ class SportsWalking(Training):
     CALORIES_SPEED_HEIGHT_MULTIPLIER: float = 0.029
     KMH_IN_MSEC: float = 0.278
     CM_IN_M: int = 100
-    mean_speed: float
 
     def __init__(self,
                  action: int,
@@ -92,6 +101,7 @@ class SportsWalking(Training):
                  ):
         super().__init__(action, duration, weight)
         self.height = height
+        self.mean_speed = self.get_mean_speed()
 
     def get_spent_calories(self) -> float:
         self.calories = ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight
@@ -107,7 +117,6 @@ class Swimming(Training):
     CALORIES_MEAN_SPEED_SHIFT: float = 1.1
     CALORIES_WEIGHT_MULTIPLIER: int = 2
     LEN_STEP: float = 1.38
-    mean_speed: float
 
     def __init__(self,
                  action: int,
@@ -119,6 +128,7 @@ class Swimming(Training):
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
+        self.mean_speed = self.get_mean_speed()
 
     def get_mean_speed(self):
         self.mean_speed = (self.length_pool * self.count_pool
